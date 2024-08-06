@@ -1,0 +1,90 @@
+<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class=" sm:w-full lg:w-3/4 mt-2">
+    <mat-card-header>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field  class="full-width">
+            <mat-label>Restaurant name</mat-label>
+            <input matInput   
+            formControlName="name" >
+            @if (addressForm.controls['name'].hasError('required')) {
+              <mat-error>Restaurant name is <strong>required</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Manager name</mat-label>
+            <input  matInput  required  formControlName="managerName">
+            @if (addressForm.controls['managerName'].hasError('required')) {
+              <mat-error>Manager name is <strong>required</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-label>Contact</mat-label>
+            <input  matInput maxlength="10"  required formControlName="contact">
+            @if (addressForm.controls['contact'].hasError('required')) {
+              <mat-error>Contact number is <strong>required</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <div class="gap-2 lg:flex md:flex ">
+        <div class="sm:w-full lg:w-2/4">
+          <mat-form-field class="full-width">
+            <mat-label>City</mat-label>
+            <input matInput required formControlName="city">
+            @if (addressForm.controls['city'].hasError('required')) {
+              <mat-error>City is <strong>required</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class=" sm:w-full lg:w-2/4">
+          <mat-form-field class="full-width">
+            <mat-label>State</mat-label>
+            <mat-select required formControlName="state">
+              @for (state of states; track state) {
+                <mat-option [value]="state.name">{{ state.name }}</mat-option>
+              }
+            </mat-select>
+            @if (addressForm.controls['state'].hasError('required')) {
+              <mat-error>State is <strong>required</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="sm:flex-col lg:flex md:flex">
+        <div class="sm:w-full lg:w-2/4">
+          <mat-form-field required class="full-width">
+            <mat-label>Postal code</mat-label>
+            <input matInput required (keypress)="handleKey($event)" #postalCode minlength="6" maxlength="6"  type="any" formControlName="postalCode">
+            @if (addressForm.controls['postalCode'].hasError('required') || addressForm.controls['postalCode'].hasError('minlength')) {
+              <mat-error>Postal code is <strong>required</strong></mat-error>
+            }
+            </mat-form-field>
+        </div>
+      </div>
+      <div >
+        <div >
+          <mat-radio-group class="flex flex-col" formControlName="restaurantType">
+            <mat-label>Restaurant type: </mat-label>
+            <mat-radio-button color="accent" value="Veg only">Veg only</mat-radio-button>
+            <mat-radio-button value="Both veg and non veg">Both veg and non veg</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="mt-2">
+      <button mat-raised-button color="primary" [disabled]="addressForm.invalid" type="submit">{{restaurantId ? "Update" : "Submit"}}</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

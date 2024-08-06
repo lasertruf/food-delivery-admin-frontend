@@ -1,0 +1,29 @@
+<div>
+   <div class="w-3/4 flex justify-between items-center flex-wrap gap-2 pb-2">
+        <div class="rounded  w-max flex gap-2 items-center  h-1/4 text-xl">
+              <button [routerLink]="['/restaurants.list']" routerLinkActive="router-link-active"  mat-icon-button>
+                <mat-icon>west</mat-icon>
+              </button>
+              {{pageTitle}}
+        </div>
+
+        @if (componentType == 'details') {
+        <div>
+            <div class="flex flex-wrap gap-2">
+                <button (click)="onMenuClick()" class="w-max" mat-raised-button>
+                    <mat-icon>restaurant_menu</mat-icon>
+                    <div>Menu</div>
+                </button>
+                <button (click)="onDelete()" class="w-max" color="warn" mat-raised-button>
+                    <mat-icon>delete</mat-icon>
+                    <div>Remove</div>
+                </button>
+            </div>
+        </div>
+             }
+   </div>
+
+    <div>
+        <app-restaurant-add-edit ></app-restaurant-add-edit>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<div>
+    <div class="text-xl flex flex-col  gap-2 items-start z-10 bg-white py-2 ">
+        <button (click)="goToDetails()" mat-raised-button>
+            <mat-icon>west</mat-icon>
+            <span>Back to details</span>
+        </button>
+        <div class="mt-2 flex items-center gap-2">
+            <mat-icon>restaurant</mat-icon>
+            {{restaurantData?.name}}, {{restaurantData?.city | titlecase}}
+         </div>
+    </div>
+
+    <mat-card appearance="outlined" class="w-full mt-2 lg:w-3/4 md:w-3/4">
+        <mat-card-header>
+            Food menu
+        </mat-card-header>
+
+        <mat-card-content class="mt-4">
+
+          <div>
+
+            <form   novalidate [formGroup]="menuForm"   #formDirective="ngForm" 
+            >
+
+               <div class="flex flex-col w-full lg:w-2/4 sm:w-full md:w-full  ">
+                    <mat-form-field>
+                        <mat-label>Dish name</mat-label>
+                        <input type="text" maxlength="30" formControlName="dishName" matInput>
+                        @if (menuForm.controls['dishName'].hasError('required')) {
+                            <mat-error>Dish name is required</mat-error>
+                        }
+                    </mat-form-field>
+    
+                    <mat-form-field>
+                        <mat-label>Dish price</mat-label>
+                        <input type="text" maxlength="5" (keypress)="handleKey($event)"  formControlName="dishPrice" matInput>
+                        @if (menuForm.controls['dishPrice'].hasError('required')) {
+                            <mat-error>Dish price is required</mat-error>
+                        }
+                    </mat-form-field>
+
+                   <div class="flex flex-wrap gap-2">
+                        <button [disabled]="menuForm.invalid" type="submit" (click)="onAddDish()" class="w-max" mat-raised-button>
+                            <mat-icon>add</mat-icon>
+                            Add dish
+                        </button>
+                        <button  (click)="onCancel()" color="warn" class="w-max" mat-raised-button>
+                            <mat-icon>restart_alt</mat-icon>
+                            Reset inputs
+                        </button>
+                   </div>
+               </div>
+
+            </form>
+
+          </div>
+
+          <div class="flex flex-col mt-4 overflow-y-auto menu-list ">
+            <ng-container *ngFor="let item of menuItems; let i = index">
+              <div class="flex w-full sm:w-full lg:w-3/4 md:w-full items-center justify-between border  ">
+                <ng-container  *ngIf="item.isEditMode; else viewMode">
+                  <form class="flex  bg-blue-100 w-full items-center justify-between" [formGroup]="menuFormInline" (ngSubmit)="saveEdit(i)">
+                    <div class="flex flex-wrap m-2 items-center gap-2">
+                        <input matInput class="border p-2" maxlength="30" formControlName="dishName" placeholder="Dish Name" />
+                        <input matInput class="border p-2" maxlength="5" (keypress)="handleKey($event)" formControlName="dishPrice" placeholder="Dish Price" />
+                    </div>
+                    <button class="mr-2" type="submit" mat-icon-button color="primary">
+                      <mat-icon>save</mat-icon>
+                    </button>
+                  </form>
+                </ng-container>
+                <ng-template #viewMode>
+                    <div class="flex flex-wrap text-wrap break-words break-all gap-2 items-start p-4">
+                        <div >{{item.dishName | titlecase}} - </div>
+                        <div >{{item.dishPrice}}/-</div>
+                    </div>
+                  <div class="flex items-center gap-1 mr-2">
+                    <button (click)="onEdit(i)" mat-icon-button><mat-icon color="primary">edit</mat-icon></button>
+                    <button (click)="onDelete(i)" mat-icon-button><mat-icon color="warn">delete_forever</mat-icon></button>
+                  </div>
+                </ng-template>
+              </div>
+            </ng-container>
+          </div>
+          
+
+          
+        </mat-card-content>
+    </mat-card>
+</div>
