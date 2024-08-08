@@ -1,18 +1,36 @@
 <div>
-    <div class="text-xl flex flex-col  gap-2 items-start z-10 bg-white py-2 ">
-        <button (click)="goToDetails()" mat-raised-button>
-            <mat-icon>west</mat-icon>
-            <span>Back to details</span>
+    <div class="text-xl flex  gap-2 items-start z-10 bg-white py-2 ">
+        <button (click)="goToDetails()" mat-icon-button>
+            <mat-icon color="primary">west</mat-icon>
+            <!-- <span>Back to details</span> -->
         </button>
-        <div class="mt-2 flex items-center gap-2">
-            <mat-icon>restaurant</mat-icon>
+        <div style="color: #035EBC;" class="mt-2 flex items-center gap-2 text-  xl">
+             <app-logo 
+             inputString={{restaurantData?.name}}
+              ></app-logo>
             {{restaurantData?.name}}, {{restaurantData?.city | titlecase}}
          </div>
     </div>
 
     <mat-card appearance="outlined" class="w-full mt-2 lg:w-3/4 md:w-3/4">
-        <mat-card-header>
-            Food menu
+        <mat-card-header class="flex gap-2 items-center">
+            <div class="text-lg flex items-center gap-1" style="color: #035EBC;">
+              <mat-icon>menu_book</mat-icon>
+              <div>Food menu</div>
+            </div>
+            <div>
+              @if (restaurantData?.restaurantType === "Veg only") {
+                <div class="veg-icon text-xs flex items-center p-1 justify-center ">VG</div>
+
+              }
+              @else{
+                <div class="flex gap-1">
+                  <div class="veg-icon text-xs flex items-center p-1 justify-center ">VG</div>
+                  <div class="non-veg-icon text-xs flex items-center p-1 justify-center ">NV</div>
+  
+                </div>
+              }
+            </div>
         </mat-card-header>
 
         <mat-card-content class="mt-4">

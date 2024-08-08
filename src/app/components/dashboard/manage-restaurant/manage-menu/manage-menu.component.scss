@@ -1,3 +1,26 @@
+@mixin restaurant-type-icon{
+    height: 24px;
+    width: 24px;
+    font-weight: bold;
+    border: 2px solid;
+}   
+
 .menu-list{
     height: calc(100vh - 31rem);
+}
+
+
+.veg-icon{
+    @include restaurant-type-icon();
+    border-color: rgb(180, 255, 180);
+    color: green;
+
+}
+
+
+.non-veg-icon{
+    @include restaurant-type-icon();
+    border-color: rgb(255, 180, 180);
+    color: red;
+
 }
